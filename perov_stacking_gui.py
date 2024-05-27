@@ -7,10 +7,9 @@ Created on Wed Apr 24 13:16:42 2024
 
 Stacking of Perovskites
 
-TODO
-seperate fields for element entry
-weird doubling error for cif cells (doubled hh cell with double lattice parameter and atoms)
 """
+
+
 
 class positions:
     def __init__(self):
@@ -28,26 +27,29 @@ class positions:
 def check_repetition(string):
     # test whether there's repetition in the string
     # check whether there even can be repetition, i.e., it's divisible by 2 or 3
-    sg = ["P-6m2 or P-3m","P3m"]
+    sg = ["P-6m2 (187) or P-3m1 (164)","P3m1 (156)"]
+    triplestring = string*3
     if len(string)%3 == 0:
         for i in range(len(string)):
             third = int(len(string)/3)
             
-            split = [string[0:third-1],string[third:2*third-1],string[2*third:3*third-1]]
+            split = [triplestring[i:third+i],triplestring[third+i:2*third+i],triplestring[2*third+i:3*third+i]]
+            # print(split)
             if split[0] == split[1] and split[0] == split[2]:
-                sg = ["R-3m","R3m"]
+                sg = ["R-3m (166)","R3m (160)"]
                 break
     if len(string)%2 == 0:
         for i in range(len(string)):
             half = int(len(string)/2)
             
-            split = [string[0:half-1],string[half:2*half-1]]
+            split = [triplestring[i:half+i],triplestring[half+i:2*half+i]]
+            # print(split)
             if split[0] == split[1]:
-                sg = ["P6_3/mmc","P6_3mc"]
+                sg = ["P6_3/mmc (194)","P6_3mc (186)"]
                 break
-    # CRUDE HACK! confirm that this holds for these states and check for further states
-    if string in ["c","ccc"]:
-        sg = ["Pm-3m","Pm-3m"]
+    # special case: triple cubic
+    if not "h" in string and len(string)%3 == 0:
+        sg = ["Pm-3m (221)","Pm-3m (221)"]
     return sg
 
 def check_inversion(string)  :      
@@ -168,7 +170,10 @@ def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements):
                     
         messagebox.showinfo("CIF file saved","CIF file was successfully saved.")
                     
-                    
+
+def symmetry_analysis(cell):
+    import spglib 
+    return spglib.get_spacegroup(cell)
 
 
 
@@ -178,6 +183,14 @@ def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements):
 class main_window:
     # initializes the base window
     def __init__(self):
+        
+        # attempt to import spglib for in-depth symmetry analysis
+        try:
+            import spglib
+            self.has_spglib = True
+        except:
+            self.has_spglib = False
+        
         self.invs = []
         self.sg = ["",""]
         self.layer_sequence = ""
@@ -185,7 +198,12 @@ class main_window:
         
         self.ABX_orig = ["A","B","X"]
         
-        self.root = create_window("450x300+120+120", "PerovGen")
+        if self.has_spglib == True:
+            window_name = "PerovGen"
+        else:
+            window_name = "PerovGen"
+        
+        self.root = create_window("450x300+120+120", window_name)
         self.frame_entry_fields()
         self.frame_output()
         self.frame_buttons()
@@ -241,9 +259,15 @@ class main_window:
             message += "Full Jagodzinski notation:\n  {}\n\n".format(self.jn)
             message += "Space group (HM notation):\n"
             if len(self.invs) > 0:
-                message += "  {}\n\n".format(self.sg[0])
+                message += "  {}".format(self.sg[0])
             else:
-                message += "  {}\n\n".format(self.sg[1])
+                message += "  {}".format(self.sg[1])
+                
+            if self.has_spglib == True:
+                message += ", SG from spglib: {}".format(self.sg[2])
+            message += "\n\n"
+            
+        
         
         # tidies up the layer sequence with Greek letters
         tidy_layer_sequence = ""
@@ -267,6 +291,12 @@ class main_window:
                 else:
                     message += " "
             message += "\n"
+        else:
+            if self.has_spglib == True:
+                message = "Program ready, spglib loaded for symmetry analysis."
+            else:
+                message = "Program ready, no spglib found. Using internal symmetry analysis."
+        
         
         # message += "{} {}".format(self.sg,self.invs)
         
@@ -345,11 +375,12 @@ class main_window:
                                         
                     return layer_sequence
                 
-                for i in range(1,3):
+                
+                for i in range(1,4):
                     encoded_sequence = base_encoded_sequence * i
                     layer_sequence = get_layer_sequence(encoded_sequence)
-                    # print(layer_sequence)
-                    if not "x" in layer_sequence:
+                    # print(layer_sequence, layer_sequence[-4:-1])
+                    if layer_sequence[-4:-1] == "AcB":
                         break
                 
                 layer_sequence = layer_sequence[:-4]
@@ -364,11 +395,7 @@ class main_window:
             
             
             if write == True:
-                # check space group
-                self.sg = check_repetition(encoded_sequence)
-                self.invs = check_inversion(encoded_sequence)
-                self.text_box.destroy()
-                self.frame_output()
+                
                 
                 # create a list of atoms with element labels and fractional coordinates
                 atom_list = []
@@ -392,6 +419,32 @@ class main_window:
                 c = n_layers/2 * a_cubic/np.sqrt(3)
                 
                 lattice_params = [a,a,c,90,90,120]
+                latt_vec = get_vectors(lattice_params)
+                
+                pos = []
+                numbers = []
+                
+                for atom in atom_list:
+                    
+                    pos.append(atom[1])
+                    if atom[0] == elements["A"]:
+                        numbers.append(1)
+                    elif atom[0] == elements["B"]:
+                        numbers.append(2)
+                    elif atom[0] == elements["X"]:
+                        numbers.append(3)
+                
+                cell = (latt_vec,pos,numbers)
+                
+                # check space group
+                self.sg = check_repetition(encoded_sequence)
+                self.invs = check_inversion(encoded_sequence)
+                
+                if self.has_spglib == True:
+                    self.sg.append(symmetry_analysis(cell))
+                self.text_box.destroy()
+                self.frame_output()
+                
                 
                 if cif == True:
                     write_cif(lattice_params, self.jn, layer_sequence, atom_list, elements)
@@ -410,9 +463,8 @@ class main_window:
                         options.remove(layer)
                     new_layer = options[0]
             else:
-                new_layer = layers[0]
-                
-            
+                new_layer = "B" #layers[0]
+    
                 
             if sorted([layers[-1],new_layer]) == sorted(["A","B"]):
                 new_interlayer = "c"
