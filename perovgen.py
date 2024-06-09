@@ -5,7 +5,7 @@ Created on Wed Apr 24 13:16:42 2024
 
 @author: mhaefner-chem
 
-Stacking of Perovskites
+Stacking of Perovskites, working
 
 """
 
@@ -27,7 +27,7 @@ class positions:
 def check_repetition(string):
     # test whether there's repetition in the string
     # check whether there even can be repetition, i.e., it's divisible by 2 or 3
-    sg = ["P-6m2 (187) or P-3m1 (164)","P3m1 (156)"]
+    sg = ["P-3m1 (164)","P3m1 (156)","P-6m2 (187)"]
     triplestring = string*3
     if len(string)%3 == 0:
         for i in range(len(string)):
@@ -36,7 +36,7 @@ def check_repetition(string):
             split = [triplestring[i:third+i],triplestring[third+i:2*third+i],triplestring[2*third+i:3*third+i]]
             # print(split)
             if split[0] == split[1] and split[0] == split[2]:
-                sg = ["R-3m (166)","R3m (160)"]
+                sg = ["R-3m (166)","R3m (160)","ERR"]
                 break
     if len(string)%2 == 0:
         for i in range(len(string)):
@@ -45,11 +45,11 @@ def check_repetition(string):
             split = [triplestring[i:half+i],triplestring[half+i:2*half+i]]
             # print(split)
             if split[0] == split[1]:
-                sg = ["P6_3/mmc (194)","P6_3mc (186)"]
+                sg = ["P6_3/mmc (194)","P6_3mc (186)","ERR"]
                 break
     # special case: triple cubic
     if not "h" in string and len(string)%3 == 0:
-        sg = ["Pm-3m (221)","Pm-3m (221)"]
+        sg = ["Pm-3m (221)","Pm-3m (221)","ERR"]
     return sg
 
 def check_inversion(string)  :      
@@ -81,6 +81,7 @@ def check_inversion(string)  :
                 invs.append(2*k+1)
             else:
                 invs.append(2*k+1-lstr*2)
+        
     return invs
 
 
@@ -172,8 +173,10 @@ def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements):
                     
 
 def symmetry_analysis(cell):
-    import spglib 
-    return spglib.get_spacegroup(cell)
+    import spglib
+    for i in range(len(cell[1])):
+        sg = spglib.get_spacegroup(cell)
+    return sg
 
 
 
@@ -203,7 +206,7 @@ class main_window:
         else:
             window_name = "PerovGen"
         
-        self.root = create_window("450x300+120+120", window_name)
+        self.root = create_window("450x350+120+120", window_name)
         self.frame_entry_fields()
         self.frame_output()
         self.frame_buttons()
@@ -254,17 +257,30 @@ class main_window:
         
     def frame_output(self):
         
+        # check for -6m2 symmety in layer to distinguish between P-6m2 and P-3m1
+        has_6m2 = False
+        for inv in self.invs:
+            if inv%2 == 0 and self.layer_sequence[inv] in ["A","B","C"]:
+                has_6m2 = True
+            else:
+                has_6m2 = False
+                break
+            
+        
         message = ""
         if len(self.sg[0]) > 0:
             message += "Full Jagodzinski notation:\n  {}\n\n".format(self.jn)
             message += "Space group (HM notation):\n"
             if len(self.invs) > 0:
-                message += "  {}".format(self.sg[0])
+                if "P-3m1" in self.sg[0] and has_6m2 == True:
+                    message += "  {}".format(self.sg[2])
+                else:
+                    message += "  {}".format(self.sg[0])
             else:
                 message += "  {}".format(self.sg[1])
                 
             if self.has_spglib == True:
-                message += ", SG from spglib: {}".format(self.sg[2])
+                message += ", SG from spglib: {}".format(self.sg[3])
             message += "\n\n"
             
         
@@ -358,9 +374,23 @@ class main_window:
             
             
             
-            # to be defined by the user
-            # encoded_sequence = "hh" #"chcchccchchcchccchchcchccch"
-            # elements = {"A":"Ti","B":"Ca","X":"O"}
+            # reduce encoded sequence to base unit if it contains repeated sequences
+            if len(base_encoded_sequence) > 1:
+                for i in range(int(len(base_encoded_sequence)),0,-1):
+                    if len(base_encoded_sequence)%i == 0:
+                        for k in range(i):
+                            reduceable = True
+                            for j in range(int(len(base_encoded_sequence)/i)):
+                                start = j*i + k
+                                end = (j+1)*i + k
+                                if end > len(base_encoded_sequence):
+                                    end = end - len(base_encoded_sequence)
+                                # print("compare:",base_encoded_sequence[0:i],base_encoded_sequence[start:end])
+                                if not base_encoded_sequence[0:i] == base_encoded_sequence[start:end]:
+                                    reduceable = False
+                            if reduceable == True:
+                                base_encoded_sequence = base_encoded_sequence[0:i]
+            # print("final:",base_encoded_sequence)
             
             if write == True:
                                 
