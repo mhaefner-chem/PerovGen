@@ -187,6 +187,8 @@ class main_window:
     # initializes the base window
     def __init__(self):
         
+        self.version = "0.9.0"
+        
         # attempt to import spglib for in-depth symmetry analysis
         try:
             import spglib
@@ -206,7 +208,7 @@ class main_window:
         else:
             window_name = "PerovGen"
         
-        self.root = create_window("450x350+120+120", window_name)
+        self.root = create_window("450x350+120+120", window_name,"PerovGen.ico")
         self.frame_entry_fields()
         self.frame_output()
         self.frame_buttons()
@@ -521,18 +523,25 @@ class main_window:
         self._button_help.pack(side=tk.LEFT,expand=True)
         
         def helpbox():
-            helpbox = create_window("650x400+120+120", "Help")
+            helpbox = create_window("650x400+120+120", "Help","PerovGen.ico")
             helpbox.config(bg='#AAAAAA')
             
-            message ='''This program turns a perovskite stacking sequence and list of elements A, B, and X into a CIF file.
-Version 0.8.0
+            message ='''PerovGen does a basic symmetry analysis on a given Jagodzinski sequence and a list of elements A, B, and X and turns them into a CIF file.
+Version {}
 
-Jagodszinski sequence:
-    hhchcchchhhc
+Jagodszinski notation:
+Specifies the ordering of the layers of the perovskite.
+"c" stands for cubic ordering, yielding the stacking pattern ABC.
+"h" stands for hexagonal ordering, yielding the stacking pattern ABA.
 
 Elements:
-    abcabc
-'''
+Specifies the elements put into sites A, B, and X of a general perovskite ABX3,with A being the in-layer cation, B the interstitial cation, and X the anion.
+    
+Notes:
+A Jagodzinski sequence has to be provided, but no elements need to be given.
+The program automatically reduces or multiplies the Jagodzinski sequence to yield a valid perovskite structure, so the sequence shown by the program may differ from the input sequence.
+    
+'''.format(self.version)
             text_box = tk.Text(helpbox, wrap = "word")
             text_box.pack(expand=True,fill=tk.X)
             text_box.insert('end', message)
@@ -547,11 +556,12 @@ Elements:
         about_button.pack(side=tk.LEFT,expand=True)
         
         def about():
-            about = create_window("650x400+120+120", "About PerovGen")
+            about = create_window("650x400+120+120", "About PerovGen","PerovGen.ico")
             about.config(bg='#AAAAAA')
-            message ='''PerovGen turns a perovskite stacking sequence and a list of elements A, B, and X into a CIF file.
-Version 0.8.0
+            message ='''PerovGen does a basic symmetry analysis on a given Jagodzinski sequence and a list of elements A, B, and X and turns them into a CIF file.
+Version {}
 
+LICENSE:
 MIT License
 Copyright (c) 2024 mhaefner-chem
 Contact: michael.haefner@uni-bayreuth.de
@@ -573,7 +583,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-'''
+
+CREDITS:
+The icon for this software was created with VESTA (version 3.5.8)
+K. Momma and F. Izumi, 
+"VESTA 3 for three-dimensional visualization of crystal, volumetric and morphology data," 
+J. Appl. Crystallogr., 44, 1272-1276 (2011).
+'''.format(self.version)
             text_box = tk.Text(about, wrap = "word")
             text_box.pack(expand=True,fill=tk.X)
             text_box.insert('end', message)
