@@ -10,6 +10,192 @@ Stacking of Perovskites, working
 """
 
 
+def symmops_data(n_sg):
+    
+     symmops = {"156":[
+("x,y,z"),
+("-y,x-y,z"),
+("-x+y,-x,z"),
+("-y,-x,z"),
+("-x+y,y,z"),
+("x,x-y,z")],
+"160":[
+("x,y,z"),
+("-y,x-y,z"),
+("-x+y,-x,z"),
+("-y,-x,z"),
+("-x+y,y,z"),
+("x,x-y,z"),
+("x+2/3,y+1/3,z+1/3"),
+("-y+2/3,x-y+1/3,z+1/3"),
+("-x+y+2/3,-x+1/3,z+1/3"),
+("-y+2/3,-x+1/3,z+1/3"),
+("-x+y+2/3,y+1/3,z+1/3"),
+("x+2/3,x-y+1/3,z+1/3"),
+("x+1/3,y+2/3,z+2/3"),
+("-y+1/3,x-y+2/3,z+2/3"),
+("-x+y+1/3,-x+2/3,z+2/3"),
+("-y+1/3,-x+2/3,z+2/3"),
+("-x+y+1/3,y+2/3,z+2/3"),
+("x+1/3,x-y+2/3,z+2/3")],
+"164":[
+("x,y,z"),
+("-y,x-y,z"),
+("-x+y,-x,z"),
+("y,x,-z"),
+("x-y,-y,-z"),
+("-x,-x+y,-z"),
+("-x,-y,-z"),
+("y,-x+y,-z"),
+("x-y,x,-z"),
+("-y,-x,z"),
+("-x+y,y,z"),
+("x,x-y,z")],
+"166":[
+("x,y,z"),
+("-y,x-y,z"),
+("-x+y,-x,z"),
+("y,x,-z"),
+("x-y,-y,-z"),
+("-x,-x+y,-z"),
+("-x,-y,-z"),
+("y,-x+y,-z"),
+("x-y,x,-z"),
+("-y,-x,z"),
+("-x+y,y,z"),
+("x,x-y,z"),
+("x+2/3,y+1/3,z+1/3"),
+("-y+2/3,x-y+1/3,z+1/3"),
+("-x+y+2/3,-x+1/3,z+1/3"),
+("y+2/3,x+1/3,-z+1/3"),
+("x-y+2/3,-y+1/3,-z+1/3"),
+("-x+2/3,-x+y+1/3,-z+1/3"),
+("-x+2/3,-y+1/3,-z+1/3"),
+("y+2/3,-x+y+1/3,-z+1/3"),
+("x-y+2/3,x+1/3,-z+1/3"),
+("-y+2/3,-x+1/3,z+1/3"),
+("-x+y+2/3,y+1/3,z+1/3"),
+("x+2/3,x-y+1/3,z+1/3"),
+("x+1/3,y+2/3,z+2/3"),
+("-y+1/3,x-y+2/3,z+2/3"),
+("-x+y+1/3,-x+2/3,z+2/3"),
+("y+1/3,x+2/3,-z+2/3"),
+("x-y+1/3,-y+2/3,-z+2/3"),
+("-x+1/3,-x+y+2/3,-z+2/3"),
+("-x+1/3,-y+2/3,-z+2/3"),
+("y+1/3,-x+y+2/3,-z+2/3"),
+("x-y+1/3,x+2/3,-z+2/3"),
+("-y+1/3,-x+2/3,z+2/3"),
+("-x+y+1/3,y+2/3,z+2/3"),
+("x+1/3,x-y+2/3,z+2/3")],
+"186":[
+("x,y,z"),
+("-y,x-y,z"),
+("-x+y,-x,z"),
+("-x,-y,z+1/2"),
+("y,-x+y,z+1/2"),
+("x-y,x,z+1/2"),
+("-y,-x,z"),
+("-x+y,y,z"),
+("x,x-y,z"),
+("y,x,z+1/2"),
+("x-y,-y,z+1/2"),
+("-x,-x+y,z+1/2")],
+"187":[
+("x,y,z"),
+("-y,x-y,z"),
+("-x+y,-x,z"),
+("x,y,-z"),
+("-y,x-y,-z"),
+("-x+y,-x,-z"),
+("-y,-x,z"),
+("-x+y,y,z"),
+("x,x-y,z"),
+("-y,-x,-z"),
+("-x+y,y,-z"),
+("x,x-y,-z")],
+"194":[
+("x,y,z"),
+("-y,x-y,z"),
+("-x+y,-x,z"),
+("-x,-y,z+1/2"),
+("y,-x+y,z+1/2"),
+("x-y,x,z+1/2"),
+("y,x,-z"),
+("x-y,-y,-z"),
+("-x,-x+y,-z"),
+("-y,-x,-z+1/2"),
+("-x+y,y,-z+1/2"),
+("x,x-y,-z+1/2"),
+("-x,-y,-z"),
+("y,-x+y,-z"),
+("x-y,x,-z"),
+("x,y,-z+1/2"),
+("-y,x-y,-z+1/2"),
+("-x+y,-x,-z+1/2"),
+("-y,-x,z"),
+("-x+y,y,z"),
+("x,x-y,z"),
+("y,x,z+1/2"),
+("x-y,-y,z+1/2"),
+("-x,-x+y,z+1/2")],
+"221":[
+("x,y,z"),
+("-x,-y,z"),
+("-x,y,-z"),
+("x,-y,-z"),
+("z,x,y"),
+("z,-x,-y"),
+("-z,-x,y"),
+("-z,x,-y"),
+("y,z,x"),
+("-y,z,-x"),
+("y,-z,-x"),
+("-y,-z,x"),
+("y,x,-z"),
+("-y,-x,-z"),
+("y,-x,z"),
+("-y,x,z"),
+("x,z,-y"),
+("-x,z,y"),
+("-x,-z,-y"),
+("x,-z,y"),
+("z,y,-x"),
+("z,-y,x"),
+("-z,y,x"),
+("-z,-y,-x"),
+("-x,-y,-z"),
+("x,y,-z"),
+("x,-y,z"),
+("-x,y,z"),
+("-z,-x,-y"),
+("-z,x,y"),
+("z,x,-y"),
+("z,-x,y"),
+("-y,-z,-x"),
+("y,-z,x"),
+("-y,z,x"),
+("y,z,-x"),
+("-y,-x,z"),
+("y,x,z"),
+("-y,x,-z"),
+("y,-x,-z"),
+("-x,-z,y"),
+("x,-z,-y"),
+("x,z,y"),
+("-x,z,-y"),
+("-z,-y,x"),
+("-z,y,-x"),
+("z,-y,-x"),
+("z,y,x")]}
+     
+     return symmops[n_sg]
+
+
+
+
+
+
 
 class positions:
     def __init__(self):
@@ -34,7 +220,6 @@ def check_repetition(string):
             third = int(len(string)/3)
             
             split = [triplestring[i:third+i],triplestring[third+i:2*third+i],triplestring[2*third+i:3*third+i]]
-            # print(split)
             if split[0] == split[1] and split[0] == split[2]:
                 sg = ["R-3m (166)","R3m (160)","ERR"]
                 break
@@ -43,7 +228,6 @@ def check_repetition(string):
             half = int(len(string)/2)
             
             split = [triplestring[i:half+i],triplestring[half+i:2*half+i]]
-            # print(split)
             if split[0] == split[1]:
                 sg = ["P6_3/mmc (194)","P6_3mc (186)","ERR"]
                 break
@@ -67,16 +251,13 @@ def check_inversion(string)  :
         bw  = bw[::-1]
         obw = obw[::-1]
         
-        # print(triple_string,fw, obw, bw, k)
-        # print(len(fw),len(obw),len(bw))
+
         if fw == bw:
-            # print(k,"fwbw")
             if 2*k < lstr*2:
                 invs.append(2*k)
             else:
                 invs.append(2*k-lstr*2)
         if fw == obw:
-            # print(k,"int")
             if 2*k+1 < lstr*2:
                 invs.append(2*k+1)
             else:
@@ -97,9 +278,9 @@ def get_vectors(parameters):
 
     vecs = [vec_a,vec_b,vec_c]
     return vecs
-
     
-def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements):
+    
+def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements,sg):
     n_layers = len(seq_layer)
     
     # get volume
@@ -109,6 +290,21 @@ def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements):
     # generate sum formula
     sum_formula = [elements["A"]+"1",elements["B"]+"1",elements["X"]+"3"]
     
+    # determine setting
+    # print(sg.split(")")[0].split[1])
+    n_sg = sg[0].split(")")[0]
+    hm_sg = n_sg.split("(")[0]
+    hm_sg = hm_sg.strip()
+    n_sg = n_sg.split("(")[1]
+    if int(n_sg) < 168:
+        setting = "trigonal"
+    elif int(n_sg) < 200:
+        setting = "hexagonal"
+    else:
+        setting = "cubic"
+    
+    symmops = symmops_data(n_sg)
+        
     name = ""
     for item in sum_formula:
         name += item.replace("1","")
@@ -118,76 +314,86 @@ def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements):
     def save_structure():
         Files = [('CIF File', '*.cif'),
             ('All Files', '*.*')]
+
         file = fd.asksaveasfile(initialfile=name,filetypes = Files, defaultextension = Files)
         return file
     
-    with save_structure() as cif:
-        cif.write("data_"+name+"\n")
-        cif.write("\n")
-        cif.write("# This structure is a automatically generated perovskite with the layer sequence {}.\n".format(seq_layer))
-        cif.write("\n")
-        cif.write("# Chemical Data\n")
-        cif.write("{:<24} '{} {} {}'\n".format("_chemical_formula_sum",sum_formula[0],sum_formula[1],sum_formula[2]))
-        cif.write("\n")
-        cif.write("# Unit Cell\n")
-        format = "{:<24} {} \n"
-        
-        cif.write(format.format("_cell_formula_units_Z",round(n_layers/2)))
-        cif.write(format.format("_cell_length_a",lattice_params[0]))
-        cif.write(format.format("_cell_length_b",lattice_params[1]))
-        cif.write(format.format("_cell_length_c",lattice_params[2]))
-        cif.write(format.format("_cell_angle_alpha",lattice_params[3]))
-        cif.write(format.format("_cell_angle_beta",lattice_params[4]))
-        cif.write(format.format("_cell_angle_gamma",lattice_params[5]))
-        cif.write(format.format("_cell_volume",V))
-        cif.write("\n")
-        
-        cif.write("# Symmetry Information\n")
-        cif.write(format.format("_symmetry_cell_setting","triclinic"))
-        cif.write(format.format("_symmetry_space_group_name_H-M","'P 1'"))
-        cif.write("loop_\n")
-        cif.write(" _symmetry_equiv_pos_as_xyz\n")
-        cif.write("x,y,z\n")
-        cif.write("\n")
-        
-        cif.write("# Structural Data\n")
-        cif.write("loop_\n")
-        cif.write(" _atom_site_label\n")
-        cif.write(" _atom_site_type_symbol\n")
-        cif.write(" _atom_site_fract_x\n")
-        cif.write(" _atom_site_fract_y\n")
-        cif.write(" _atom_site_fract_z\n")
-        cif.write(" _atom_site_occupancy\n")
-        
-        atom_counter = {"A":0,"B":0,"X":0}
-        for key, element in elements.items():
-            for atom in atom_list:
-                if atom[0] == element:
-                    atom_counter[key] += 1
-                    cif.write("  {}{} {} ".format(atom[0],atom_counter[key],atom[0]))
-                    for coord in atom[1]:
-                        cif.write("{:6.4f} ".format(coord))
-                    cif.write("1\n")
-                    
-        messagebox.showinfo("CIF file saved","CIF file was successfully saved.")
+    file = save_structure()
+    if file != None:
+        with file as cif:
+            cif.write("data_"+name+"\n")
+            cif.write("\n")
+            cif.write("# This structure is a automatically generated perovskite with the layer sequence {}.\n".format(seq_layer))
+            cif.write("\n")
+            cif.write("# Chemical Data\n")
+            cif.write("{:<24} '{} {} {}'\n".format("_chemical_formula_sum",sum_formula[0],sum_formula[1],sum_formula[2]))
+            cif.write("\n")
+            cif.write("# Unit Cell\n")
+            format = "{:<24} {} \n"
+            
+            cif.write(format.format("_cell_formula_units_Z",round(n_layers/2)))
+            cif.write(format.format("_cell_length_a","{:10.6f}".format(lattice_params[0])))
+            cif.write(format.format("_cell_length_b","{:10.6f}".format(lattice_params[1])))
+            cif.write(format.format("_cell_length_c","{:10.6f}".format(lattice_params[2])))
+            cif.write(format.format("_cell_angle_alpha","{:10.6f}".format(lattice_params[3])))
+            cif.write(format.format("_cell_angle_beta","{:10.6f}".format(lattice_params[4])))
+            cif.write(format.format("_cell_angle_gamma","{:10.6f}".format(lattice_params[5])))
+            cif.write(format.format("_cell_volume","{:10.3f}".format(V)))
+            cif.write("\n")
+            
+            cif.write("# Symmetry Information\n")
+            cif.write(format.format("_symmetry_cell_setting",setting))
+            cif.write(format.format("_symmetry_space_group_name_H-M","'{}'".format(hm_sg)))
+            cif.write(format.format("_space_group_IT_number","{}".format(n_sg)))
+            cif.write("loop_\n")
+            cif.write(" _symmetry_equiv_pos_as_xyz\n")
+            for symmop in symmops:
+                cif.write("{}\n".format(symmop))
+            cif.write("\n")
+            
+            cif.write("# Structural Data\n")
+            cif.write("loop_\n")
+            cif.write(" _atom_site_label\n")
+            cif.write(" _atom_site_type_symbol\n")
+            cif.write(" _atom_site_fract_x\n")
+            cif.write(" _atom_site_fract_y\n")
+            cif.write(" _atom_site_fract_z\n")
+            cif.write(" _atom_site_occupancy\n")
+            
+            atom_counter = {"A":0,"B":0,"X":0}
+            for key, element in elements.items():
+                for atom in atom_list:
+                    if atom[0] == element:
+                        atom_counter[key] += 1
+                        cif.write("  {}{} {} ".format(atom[0],atom_counter[key],atom[0]))
+                        for coord in atom[1]:
+                            cif.write("{:6.4f} ".format(coord))
+                        cif.write("1\n")
+                        
+            messagebox.showinfo("CIF file saved","CIF file was successfully saved.")
                     
 
 def symmetry_analysis(cell):
     import spglib
-    for i in range(len(cell[1])):
-        sg = spglib.get_spacegroup(cell)
-    return sg
+    sg = spglib.get_spacegroup(cell)
+    symmetry = spglib.get_symmetry(cell)
+    stdcell = spglib.standardize_cell(cell)
+
+    eq_atoms = list(set(symmetry["equivalent_atoms"]))
+    return sg, stdcell, eq_atoms
 
 
 
 # GUI
 
 # creates the search and request window
+import os
 class main_window:
+    
     # initializes the base window
     def __init__(self):
         
-        self.version = "0.9.0"
+        self.version = "0.9.5"
         
         # attempt to import spglib for in-depth symmetry analysis
         try:
@@ -201,14 +407,19 @@ class main_window:
         self.layer_sequence = ""
         self.jn = ""
         
-        self.ABX_orig = ["A","B","X"]
+        self.ABX_label = ["A","B","X"]
+        self.ABX_orig = ["Ca","Ti","O"]
         
         if self.has_spglib == True:
             window_name = "PerovGen"
         else:
             window_name = "PerovGen"
         
-        self.root = create_window("450x350+120+120", window_name,"PerovGen.ico")
+        if os.path.isfile("PerovGen.ico"):
+            self.icon = "PerovGen.ico"
+        else:
+            self.icon = ""
+        self.root = create_window("450x350+120+120", window_name,self.icon)
         self.frame_entry_fields()
         self.frame_output()
         self.frame_buttons()
@@ -242,7 +453,7 @@ class main_window:
             self.ABX = [""] * 3
             for i in range(3):
                 self._label_ABX[i] = ttk.Label(self._frame_ABX)
-                self._label_ABX[i]["text"] = "Element {}:".format(self.ABX_orig[i])
+                self._label_ABX[i]["text"] = "Element {}:".format(self.ABX_label[i])
                 self._label_ABX[i].pack(side=tk.LEFT)
                 
                 self.ABX[i] = tk.StringVar()
@@ -276,10 +487,12 @@ class main_window:
             if len(self.invs) > 0:
                 if "P-3m1" in self.sg[0] and has_6m2 == True:
                     message += "  {}".format(self.sg[2])
+                    self.sg[0] = self.sg[2]
                 else:
                     message += "  {}".format(self.sg[0])
             else:
                 message += "  {}".format(self.sg[1])
+                self.sg[0] = self.sg[1]
                 
             if self.has_spglib == True:
                 message += ", SG from spglib: {}".format(self.sg[3])
@@ -300,12 +513,12 @@ class main_window:
                 tidy_layer_sequence += letter
                 
         if len(self.layer_sequence) > 0:            
-            message += "Sequence of layers and interlayers\n(inversion centers marked with i):\n"
+            message += "Sequence of layers and interlayers\n(layers with symmetry centers marked with s):\n"
             message += "  {}\n".format(tidy_layer_sequence)
             message += "  "
             for i in range(len(self.layer_sequence)):
                 if i in self.invs:
-                    message += "i"
+                    message += "s"
                 else:
                     message += " "
             message += "\n"
@@ -351,7 +564,8 @@ class main_window:
             if len(base_encoded_sequence) == 0:
                 write = False
                 messagebox.showerror("Missing Jagodszinski sequence","No Jagodszinski sequence given! Sequence should only contain c (cubic) and h (hexagonal).")
-            
+                return
+                
             # shift by one, since notation starts at layer A, but program applies starting at B
             base_encoded_sequence = base_encoded_sequence[1:]+base_encoded_sequence[0]
             
@@ -361,6 +575,7 @@ class main_window:
                     write = False
                     messagebox.showerror("Invalid Jagodszinski sequence","Invalid Jagodszinski sequence! Sequence should only contain c (cubic) and h (hexagonal).")
                     break
+                    return
                 else:
                     write = True
             
@@ -395,6 +610,8 @@ class main_window:
             # print("final:",base_encoded_sequence)
             
             if write == True:
+                
+                
                                 
                 def get_layer_sequence(encoded_sequence):
                     # define the initial sequence
@@ -414,17 +631,16 @@ class main_window:
                     # print(layer_sequence, layer_sequence[-4:-1])
                     if layer_sequence[-4:-1] == "AcB":
                         break
+                    
+                # check symmetry
+                self.sg = check_repetition(encoded_sequence)
+                self.invs = check_inversion(encoded_sequence)
                 
+                # adjust for fact that AcB is preset
                 layer_sequence = layer_sequence[:-4]
                 
                 self.jn = encoded_sequence[-1] + encoded_sequence[:-1]
                 self.layer_sequence = layer_sequence
-                
-                # if i == 2:
-                #     messagebox.showinfo("Invalid Jagodszinski sequence","Invalid initial Jagodszinski sequence! Sequence ends on double A layer and was doubled to {}.".format(encoded_sequence))
-                # if i == 3:
-                #     messagebox.showinfo("Invalid Jagodszinski sequence","Invalid initial Jagodszinski sequence! Sequence ends on double A layer and was tripled to {}.".format(encoded_sequence))
-            
             
             if write == True:
                 
@@ -468,18 +684,56 @@ class main_window:
                 
                 cell = (latt_vec,pos,numbers)
                 
-                # check space group
-                self.sg = check_repetition(encoded_sequence)
-                self.invs = check_inversion(encoded_sequence)
                 
+                
+                # check symmetry with spglib
                 if self.has_spglib == True:
-                    self.sg.append(symmetry_analysis(cell))
+                    spglib_sym, spglib_cell, spglib_ineq = symmetry_analysis(cell)
+                    self.sg.append(spglib_sym)
+                    # print(spglib_cell)
+                    # print(spglib_ineq)
+                    atom_list = []
+                    for i in range(len(spglib_cell[1])):
+                        if i in spglib_ineq:
+                            atom = [self.ABX[spglib_cell[2][i]-1].get(),spglib_cell[1][i]]
+                            atom_list.append(atom)
+                            
+                    def vec_length(vec):
+                        length = 0
+                        for i in vec:
+                            length += i**2
+                        length = np.sqrt(length)
+                        return length
+                    
+                    def vec_angle(vec_a,vec_b):
+                        l_a = vec_length(vec_a)
+                        l_b = vec_length(vec_b)
+                        
+                        dot = 0
+                        for i in range(3):
+                            dot += vec_a[i] * vec_b[i]
+                            
+                        angle = np.arccos(dot/(l_a * l_b))*180.0/np.pi
+                        return angle
+                
+                    latt_vec = spglib_cell[0]
+                    for i in range(3):
+                        lattice_params[i] = vec_length(latt_vec[i])
+                    
+                    lattice_params[3] = abs(vec_angle(latt_vec[1],latt_vec[2]))
+                    lattice_params[4] = abs(vec_angle(latt_vec[0],latt_vec[2]))
+                    lattice_params[5] = abs(vec_angle(latt_vec[0],latt_vec[1]))
+                    
+                    # print(lattice_params)
+                    
+                    
+                    
                 self.text_box.destroy()
                 self.frame_output()
                 
                 
                 if cif == True:
-                    write_cif(lattice_params, self.jn, layer_sequence, atom_list, elements)
+                    write_cif(lattice_params, self.jn, layer_sequence, atom_list, elements, self.sg)
                 
         # function for adding the layers, one by one
         def add_layer(layers, positions, char="c", final=False):
@@ -523,10 +777,10 @@ class main_window:
         self._button_help.pack(side=tk.LEFT,expand=True)
         
         def helpbox():
-            helpbox = create_window("650x400+120+120", "Help","PerovGen.ico")
+            helpbox = create_window("650x400+120+120", "Help",self.icon)
             helpbox.config(bg='#AAAAAA')
             
-            message ='''PerovGen does a basic symmetry analysis on a given Jagodzinski sequence and a list of elements A, B, and X and turns them into a CIF file.
+            message ='''PerovGen does a basic symmetry analysis on a given Jagodzinski sequence and a list of elements A, B, and X and turns them into a symmetrized CIF file.
 Version {}
 
 Jagodszinski notation:
@@ -540,6 +794,7 @@ Specifies the elements put into sites A, B, and X of a general perovskite ABX3,w
 Notes:
 A Jagodzinski sequence has to be provided, but no elements need to be given.
 The program automatically reduces or multiplies the Jagodzinski sequence to yield a valid perovskite structure, so the sequence shown by the program may differ from the input sequence.
+Furthermore, the final structure written into the CIF file will deviate from the sequence due to the standardization of the unit cell.
     
 '''.format(self.version)
             text_box = tk.Text(helpbox, wrap = "word")
@@ -556,9 +811,9 @@ The program automatically reduces or multiplies the Jagodzinski sequence to yiel
         about_button.pack(side=tk.LEFT,expand=True)
         
         def about():
-            about = create_window("650x400+120+120", "About PerovGen","PerovGen.ico")
+            about = create_window("650x400+120+120", "About PerovGen",self.icon)
             about.config(bg='#AAAAAA')
-            message ='''PerovGen does a basic symmetry analysis on a given Jagodzinski sequence and a list of elements A, B, and X and turns them into a CIF file.
+            message ='''PerovGen does a basic symmetry analysis on a given Jagodzinski sequence and a list of elements A, B, and X and turns them into a symmetrized CIF file.
 Version {}
 
 LICENSE:
@@ -589,6 +844,35 @@ The icon for this software was created with VESTA (version 3.5.8)
 K. Momma and F. Izumi, 
 "VESTA 3 for three-dimensional visualization of crystal, volumetric and morphology data," 
 J. Appl. Crystallogr., 44, 1272-1276 (2011).
+
+The binaries were compiled with spglib for symmetry analysis.
+Copyright (c) 2024, Spglib team
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+* Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+* Neither the name of the <organization> nor the
+  names of its contributors may be used to endorse or promote products
+  derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT
+HOLDER> BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 '''.format(self.version)
             text_box = tk.Text(about, wrap = "word")
             text_box.pack(expand=True,fill=tk.X)
