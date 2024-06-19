@@ -192,11 +192,6 @@ def symmops_data(n_sg):
      return symmops[n_sg]
 
 
-
-
-
-
-
 class positions:
     def __init__(self):
         # define the possible layers
@@ -291,7 +286,6 @@ def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements,sg):
     sum_formula = [elements["A"]+"1",elements["B"]+"1",elements["X"]+"3"]
     
     # determine setting
-    # print(sg.split(")")[0].split[1])
     n_sg = sg[0].split(")")[0]
     hm_sg = n_sg.split("(")[0]
     hm_sg = hm_sg.strip()
@@ -309,7 +303,6 @@ def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements,sg):
     for item in sum_formula:
         name += item.replace("1","")
     name += "_" + seq_code
-    # cif_name = filename #name + ".cif"
     
     def save_structure():
         Files = [('CIF File', '*.cif'),
@@ -378,10 +371,6 @@ def symmetry_analysis(cell):
     sg = spglib.get_spacegroup(cell)
     symmetry = spglib.get_symmetry(cell)
     stdcell = spglib.standardize_cell(cell)
-    # print(symmetry)
-    # print(spglib.get_symmetry_dataset(cell))
-    # print(spglib.get_symmetry(stdcell))
-    # print(stdcell)
 
     eq_atoms = list(set(symmetry["equivalent_atoms"]))
     return sg, stdcell, eq_atoms
@@ -397,13 +386,14 @@ class main_window:
     # initializes the base window
     def __init__(self):
         
-        self.version = "0.9.5"
+        self.version = "1.0.0"
         
         # attempt to import spglib for in-depth symmetry analysis
         try:
             import spglib
             self.has_spglib = True
         except:
+            messagebox.showerror("No spglib","No spglib was found. The program will not be able to save any CIF files.")
             self.has_spglib = False
         
         self.invs = []
@@ -498,8 +488,8 @@ class main_window:
                 message += "  {}".format(self.sg[1])
                 self.sg[0] = self.sg[1]
                 
-            if self.has_spglib == True:
-                message += ", SG from spglib: {}".format(self.sg[3])
+            # if self.has_spglib == True:
+                # message += ", SG from spglib: {}".format(self.sg[3])
             message += "\n\n"
             
         
@@ -527,14 +517,10 @@ class main_window:
                     message += " "
             message += "\n"
         else:
-            if self.has_spglib == True:
-                message = "Program ready, spglib loaded for symmetry analysis."
+            if self.has_spglib:
+                message = "Program ready."
             else:
-                message = "Program ready, no spglib found. Using internal symmetry analysis."
-        
-        
-        # message += "{} {}".format(self.sg,self.invs)
-        
+                message = "Program ready. Running without spglib."
         
         
         self.text_box = tk.Text(self.root, wrap = "word",height=10)
@@ -606,12 +592,11 @@ class main_window:
                                 end = (j+1)*i + k
                                 if end > len(base_encoded_sequence):
                                     end = end - len(base_encoded_sequence)
-                                # print("compare:",base_encoded_sequence[0:i],base_encoded_sequence[start:end])
+                        
                                 if not base_encoded_sequence[0:i] == base_encoded_sequence[start:end]:
                                     reduceable = False
                             if reduceable == True:
                                 base_encoded_sequence = base_encoded_sequence[0:i]
-            # print("final:",base_encoded_sequence)
             
             if write == True:
                 
@@ -632,7 +617,6 @@ class main_window:
                 for i in range(1,4):
                     encoded_sequence = base_encoded_sequence * i
                     layer_sequence = get_layer_sequence(encoded_sequence)
-                    # print(layer_sequence, layer_sequence[-4:-1])
                     if layer_sequence[-4:-1] == "AcB":
                         break
                     
@@ -694,8 +678,6 @@ class main_window:
                 if self.has_spglib == True:
                     spglib_sym, spglib_cell, spglib_ineq = symmetry_analysis(cell)
                     self.sg.append(spglib_sym)
-                    # print(spglib_cell)
-                    # print(spglib_ineq)
                     atom_list = []
                     for i in range(len(spglib_cell[1])):
                         if i in spglib_ineq:
@@ -726,10 +708,7 @@ class main_window:
                     
                     lattice_params[3] = abs(vec_angle(latt_vec[1],latt_vec[2]))
                     lattice_params[4] = abs(vec_angle(latt_vec[0],latt_vec[2]))
-                    lattice_params[5] = abs(vec_angle(latt_vec[0],latt_vec[1]))
-                    
-                    # print(lattice_params)
-                    
+                    lattice_params[5] = abs(vec_angle(latt_vec[0],latt_vec[1]))                    
                     
                     
                 self.text_box.destroy()
@@ -737,7 +716,10 @@ class main_window:
                 
                 
                 if cif == True:
-                    write_cif(lattice_params, self.jn, layer_sequence, atom_list, elements, self.sg)
+                    if self.has_spglib:
+                        write_cif(lattice_params, self.jn, layer_sequence, atom_list, elements, self.sg)
+                    else:
+                        messagebox.showerror("No spglib","No spglib was found. The program cannot save the CIF file.")
                 
         # function for adding the layers, one by one
         def add_layer(layers, positions, char="c", final=False):
@@ -843,7 +825,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-CREDITS:
+FURTHER LICENSE INFORMATION:
 The icon for this software was created with VESTA (version 3.5.8)
 K. Momma and F. Izumi, 
 "VESTA 3 for three-dimensional visualization of crystal, volumetric and morphology data," 
