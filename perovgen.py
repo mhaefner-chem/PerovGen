@@ -323,7 +323,7 @@ def write_cif(lattice_params,seq_code,seq_layer,atom_list,elements,sg):
         with file as cif:
             cif.write("data_"+name+"\n")
             cif.write("\n")
-            cif.write("# This structure is a automatically generated perovskite with the layer sequence {}.\n".format(seq_layer))
+            cif.write("# This structure is an automatically generated perovskite with the layer sequence {}.\n".format(seq_layer))
             cif.write("\n")
             cif.write("# Chemical Data\n")
             cif.write("{:<24} '{} {} {}'\n".format("_chemical_formula_sum",sum_formula[0],sum_formula[1],sum_formula[2]))
@@ -378,6 +378,10 @@ def symmetry_analysis(cell):
     sg = spglib.get_spacegroup(cell)
     symmetry = spglib.get_symmetry(cell)
     stdcell = spglib.standardize_cell(cell)
+    # print(symmetry)
+    # print(spglib.get_symmetry_dataset(cell))
+    # print(spglib.get_symmetry(stdcell))
+    # print(stdcell)
 
     eq_atoms = list(set(symmetry["equivalent_atoms"]))
     return sg, stdcell, eq_atoms
