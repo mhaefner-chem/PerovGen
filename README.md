@@ -39,7 +39,11 @@ For further details on installing spglib, please consult the [github page](https
 The compiled binaries are attached to the assets of the released version of the program and should work out of the box on Windows systems.
 
 ## How to cite?
-Not yet published.
+**“Hexagonal” Perovskites: From Stacking Sequence to Space Group Symmetry and New Opportunities**
+Sylvia L. Kunz, Michael Haefner, and Oliver Clemens
+*Chemistry of Materials* **2024** *36* (23), 11341-11358
+DOI: 10.1021/acs.chemmater.4c01789
+at [https://pubs.acs.org/doi/10.1021/acs.chemmater.4c01789]
 
 ## Further license information
 
